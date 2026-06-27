@@ -1324,6 +1324,9 @@ function setSyncCfg(cfg) { localStorage.setItem('fin_sync_cfg', JSON.stringify(c
 function setSyncStatus(msg, color) {
   const el = document.getElementById('sync-status');
   if (el) { el.textContent = msg; el.style.color = color||'var(--tx3)'; }
+  // Also update mobile status if present
+  const mel = document.getElementById('m-sync-status');
+  if (mel && msg) { mel.textContent = msg; }
 }
 
 function showSyncSetup() {
@@ -1410,8 +1413,8 @@ async function cloudLoad() {
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────
-buildSel();
-renderDash();
+// Desktop init disabled in mobile — mobile init runs below
+if(typeof mNav === 'undefined') { try { buildSel(); renderDash(); } catch(e) {} }
 
 
 // ═══ MOBILE-SPECIFIC CODE ═════════════════════════════════════════════════
